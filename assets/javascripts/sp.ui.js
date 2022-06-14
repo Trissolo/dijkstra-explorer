@@ -13,6 +13,8 @@ var UI = (function() {
 
         buttonLoadExampleData: "#load-example",
 
+		stringifyDataButton: "#stringify-data-button",
+		
         exportDataButton: "#export-data-button",
 
         importDataFileSelectButton: "#import-data-button",
@@ -69,6 +71,14 @@ var UI = (function() {
         bindActionToElementEvent(selectors.graphBackgroundUrlForm, "submit", function(e) { 
             setGraphBGToURL($(selectors.graphBackgroundUrlChooserInput).val());
         });
+		
+		
+		bindActionToElementEvent(selectors.stringifyDataButton, "click", function(e) { 
+			var stringifiedData = JSON.stringify({ nodes: sp.data.nodes, paths: sp.data.paths }, null, 2);
+			const gag = document.getElementById('mio')
+			gag.innerHTML = stringifiedData
+		});
+		
 
         bindActionToElementEvent(selectors.exportDataButton, "click", function(e) { 
             var exportData = JSON.stringify({ nodes: sp.data.nodes, paths: sp.data.paths });

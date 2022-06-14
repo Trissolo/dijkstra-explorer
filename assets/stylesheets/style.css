@@ -98,3 +98,7 @@ h4 {
     cursor: inherit;
     display: block;
 }
+
+.sel {
+	user-select: text;
+}
