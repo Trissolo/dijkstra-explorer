@@ -199,6 +199,14 @@ var sp = {
                 UI.log("ignoring end node "+index+" as same as start node");
                 return;
             }
+			
+			if (sp.hasDuplicate(sp.data.paths, sp.data.state.fromNode, index))
+            {
+               UI.log("Node " + sp.data.state.fromNode + " and Node " + index + " are already joined! Skipping...");
+               sp.data.state.fromNode = null;
+               return false;
+            }
+			
             UI.log("setting join from "+sp.data.state.fromNode+" to "+index);
             sp.data.state.toNode = index;
             var pathDatum = { 
@@ -206,6 +214,7 @@ var sp = {
                 from: sp.data.state.fromNode, 
                 to: index
             };
+			console.dir("DEBUG DATA:", sp.data.paths);
             sp.data.paths.push(pathDatum);
             sp.calculateDistances(true);
             sp.redrawGraph();
@@ -292,6 +301,22 @@ var sp = {
             if (dist === 'x') dist = infinity;
             return dist;
         }
+    },
+	
+	hasDuplicate: function(ary, from, to)
+    {
+      if (ary.length === 0) return false
+      
+      for (const elem of ary)
+      {
+        if ((elem.to === from && elem.from === to) || (elem.to === to && elem.from === from))
+        {
+          return true
+        }
+      }
+      
+      return false
     }
+
 
 };
